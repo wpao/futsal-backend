@@ -14,20 +14,22 @@ const prisma = new PrismaClient()
 // create express app
 const app = express();
 
-// Izinkan semua origin (Tidak disarankan untuk produksi)
-// app.use(cors());
-
 // ini adalah middleware
 // supaya express bisa menerima request body
 app.use(express.json());
 
-// hanya mengizinkan akses dari frontend http://localhost:5173, konfigurasi berikut:
-app.use(cors({
-  origin: "http://localhost:5173", // Hanya izinkan frontend
-  methods: ["GET", "POST", "PUT", "DELETE"], // Metode yang diizinkan
-  allowedHeaders: ["Content-Type", "Authorization"], // Header yang diizinkan
-  credentials: true, // Izinkan pengiriman cookie (opsional)
-}));
+// Izinkan semua origin (Tidak disarankan untuk produksi)
+app.use(cors());
+
+// mengatur izin yang access 
+// app.use(cors({
+//   origin: ["http://localhost:5173", "http://futsal-fe:80"], // Tambahkan alamat frontend di Docker
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true,
+// }));
+
+
 
 // // interface
 interface UserData {
