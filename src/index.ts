@@ -7,6 +7,15 @@ import { PrismaClient, Prisma } from "@prisma/client";
 // menerapkan JWT
 import jwt from "jsonwebtoken";
 
+// delete date last day
+import cron from "node-cron";
+// import { deleteExpiredData } from "";
+
+cron.schedule("0 0 * * *", async () => {
+  console.log("Running scheduled job to delete expired data...");
+  await deleteExpiredData();
+});
+
 // create prisma client
 // connection database
 const prisma = new PrismaClient()
@@ -19,15 +28,15 @@ const app = express();
 app.use(express.json());
 
 // Izinkan semua origin (Tidak disarankan untuk produksi)
-app.use(cors());
+// app.use(cors());
 
 // mengatur izin yang access 
-// app.use(cors({
-//   origin: ["http://localhost:5173", "http://futsal-fe:80"], // Tambahkan alamat frontend di Docker
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: [/* "http://localhost:5173" */ "http://futsal-fe:80"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+}));
 
 
 
@@ -330,8 +339,34 @@ app.get("/info/:idUser", async (req: Request, res: any) => {
   }
 });
 
+// delate data last day
+export const deleteExpiredData = async () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set ke awal hari ini
+
+  try {
+    const deletedRecords = await prisma.booking.deleteMany({
+      where: {
+        date: {
+          lt: today, // Hapus data yang tanggalnya lebih kecil dari hari ini
+        },
+      },
+    });
+
+    console.log(`Deleted ${deletedRecords.count} expired records.`);
+  } catch (error) {
+    console.error("Error deleting expired data:", error);
+  }
+};
+
 // start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running on http://localhost:${PORT}`);
+// });
+
+// app.listen(3000, "0.0.0.0", () => console.log("Server running on http://0.0.0.0:3000"));

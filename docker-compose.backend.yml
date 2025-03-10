@@ -1,0 +1,22 @@
+# version: "3.8"
+
+services:
+  backend:
+    build: .
+    image: albaeud/futsal-backend
+    container_name: futsal-backend
+    restart: always
+    # depends_on:
+    #   - database
+    environment:
+      PORT: 3000
+      DATABASE_URL: "postgres://myuser:mypassword@database:5432/mydatabase"
+      JWT_SECRET: "22JWTSECRET"
+    ports:
+      - "3000:3000"
+    networks:
+      - futsal-network
+
+networks:
+  futsal-network:
+    external: true
