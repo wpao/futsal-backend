@@ -31,7 +31,11 @@ app.use(cors());
 
 // mengatur izin yang access
 // app.use(cors({
+
 //   origin: [/* "http://localhost:5173" */ "http://futsal-fe:80"],
+
+//   origin: [/* "http://localhost:5173" */ /* "http://futsal-fe:80" */ "http://192.168.1.4:3001"],
+
 //   methods: ["GET", "POST", "PUT", "DELETE"],
 //   allowedHeaders: ["Content-Type", "Authorization"],
 //   credentials: true,
