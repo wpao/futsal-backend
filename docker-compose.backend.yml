@@ -10,7 +10,8 @@ services:
     #   - database
     environment:
       PORT: 3000
-      DATABASE_URL: "postgres://myuser:mypassword@database:5432/mydatabase"
+      DATABASE_URL: "postgres://myuser:mypassword@192.168.1.4:5432/mydatabase"
+      # DATABASE_URL: "postgres://myuser:mypassword@database:5432/mydatabase"
       JWT_SECRET: "22JWTSECRET"
     ports:
       - "3000:3000"
