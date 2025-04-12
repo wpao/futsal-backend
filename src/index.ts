@@ -1,7 +1,8 @@
 import express, { Request, NextFunction } from "express";
 import cors from "cors";
 import bcrypt from "bcrypt";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
 
 // menerapkan JWT
 import jwt from "jsonwebtoken";
