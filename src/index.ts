@@ -28,19 +28,20 @@ const app = express();
 app.use(express.json());
 
 // Izinkan semua origin (Tidak disarankan untuk produksi)
-app.use(cors());
+// app.use(cors());
 
 // mengatur izin yang access
-// app.use(cors({
+app.use(
+  cors({
+    // origin: [/* "http://localhost:5173" */ "http://futsal-fe:80"],
 
-//   origin: [/* "http://localhost:5173" */ "http://futsal-fe:80"],
+    origin: ["http://192.168.1.4:3001" /* "https://futsal.albaeud.cyou" */],
 
-//   origin: [/* "http://localhost:5173" */ /* "http://futsal-fe:80" */ "http://192.168.1.4:3001"],
-
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-//   credentials: true,
-// }));
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // // interface
 interface UserData {
